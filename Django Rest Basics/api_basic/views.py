@@ -15,6 +15,7 @@ from rest_framework.views import APIView
 from rest_framework.authentication import BaseAuthentication, SessionAuthentication, BasicAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ViewSet
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from .models import *
 from .serializers import *
@@ -117,23 +118,17 @@ def api_detail_article_view(request, pk):
 """
 # Class based views with DRF token authentication to handle API requests
 class ClassApiAllArticleView(APIView):
-    authentication_classes = [TokenAuthentication, SessionAuthentication, BasicAuthentication]
+    authentication_classes = [JWTAuthentication, TokenAuthentication, SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
     def get(self, request):
         articles = Article.objects.all()
         serializer = ArticleSerializer(articles, many=True)
         return Response(serializer.data, status.HTTP_200_OK)
 
-    def post(self, request):
-        serializer = ArticleSerializer(data=request.data)
 
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status.HTTP_201_CREATED)
-        return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
 class ListAllArticlesView(APIView):
-    authentication_classes = [TokenAuthentication, SessionAuthentication, BasicAuthentication]
+    authentication_classes = [JWTAuthentication, TokenAuthentication, SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -143,7 +138,12 @@ class ListAllArticlesView(APIView):
         pass
         
     def post(self, request):
-        pass
+        serializer = ArticleSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status.HTTP_201_CREATED)
+        return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
 class ClassApiDetailArticleView(APIView):
     def get_object(self, id):
