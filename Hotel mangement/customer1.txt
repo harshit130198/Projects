@@ -1,6 +1,0 @@
-Name of Customer ::dhruv
-Mobile No of Customer ::9999
-Total People Staying ::2
-Check-in date and time of customer ::Fri Mar 03 19:55:09 2017
-ID-proof Given ::adhar
-
