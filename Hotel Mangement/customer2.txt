@@ -1,0 +1,6 @@
+Name of Customer ::ketul
+Mobile No of Customer ::a
+Total People Staying ::a
+Check-in date and time of customer ::Fri Dec 25 21:03:04 2015
+ID-proof Given ::a
+
